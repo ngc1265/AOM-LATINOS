@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignación Gaming - Grupos y Líneas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Orbitron', monospace;
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff41);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .groups-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .group-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .group-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            padding: 2px;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask-composite: xor;
+        }
+        
+        .group1 {
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+        }
+        
+        .group2 {
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+        
+        .group-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .group1 .group-title {
+            background: linear-gradient(45deg, #00f5ff, #0077be);
+            color: #000;
+            text-shadow: none;
+        }
+        
+        .group2 .group-title {
+            background: linear-gradient(45deg, #ff00ff, #8b008b);
+            color: #fff;
+        }
+        
+        .table-container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            padding: 15px 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .group1 th {
+            background: linear-gradient(45deg, #00f5ff, #0099cc);
+            color: #000;
+        }
+        
+        .group2 th {
+            background: linear-gradient(45deg, #ff00ff, #cc0099);
+            color: #fff;
+        }
+        
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .line-number {
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 80px;
+        }
+        
+        .group1 .line-number {
+            color: #00f5ff;
+            text-shadow: 0 0 10px #00f5ff;
+        }
+        
+        .group2 .line-number {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        
+        .players {
+            text-align: left;
+            font-weight: 400;
+            padding-left: 15px;
+        }
+        
+        .player {
+            display: block;
+            padding: 5px 0;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .player:hover {
+            color: #00ff41;
+            text-shadow: 0 0 8px #00ff41;
+            transform: translateX(5px);
+        }
+        
+        .single-player {
+            font-weight: 500;
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .groups-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .legend {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .legend h3 {
+            color: #00ff41;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .legend p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">⚡ ASIGNACIÓN GAMING ⚡</h1>
+        
+        <div class="groups-container">
+            <!-- GRUPO 1 -->
+            <div class="group-section group1">
+                <h2 class="group-title">🎮 GRUPO 1</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>LÍNEA</th>
+                                <th>JUGADORES ASIGNADOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="line-number">01</td>
+                                <td class="players">
+                                    <span class="player">TAL</span>
+                                    <span class="player">CRISARG</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">02</td>
+                                <td class="players">
+                                    <span class="player single-player">LORD_AYLOST</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">03</td>
+                                <td class="players">
+                                    <span class="player">MERLÍN</span>
+                                    <span class="player">PETRUS_NIGHTMARE</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">04</td>
+                                <td class="players">
+                                    <span class="player single-player">JIMGABALE</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">05</td>
+                                <td class="players">
+                                    <span class="player">THUND</span>
+                                    <span class="player">NIBIRU</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">06</td>
+                                <td class="players">
+                                    <span class="player single-player">RETHYKUS</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">07</td>
+                                <td class="players">
+                                    <span class="player">PESTANIUS</span>
+                                    <span class="player">R.O.D</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">08</td>
+                                <td class="players">
+                                    <span class="player">LEGIONARIOS</span>
+                                    <span class="player">SHADOW_SAM</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">09</td>
+                                <td class="players">
+                                    <span class="player">JOSE</span>
+                                    <span class="player">ROBERT</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- GRUPO 2 -->
+            <div class="group-section group2">
+                <h2 class="group-title">🎮 GRUPO 2</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>LÍNEA</th>
+                                <th>JUGADORES ASIGNADOS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="line-number">01</td>
+                                <td class="players">
+                                    <span class="player">RYAN</span>
+                                    <span class="player">ROCOSO</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">02</td>
+                                <td class="players">
+                                    <span class="player single-player">CROW</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">03</td>
+                                <td class="players">
+                                    <span class="player">DEPATY</span>
+                                    <span class="player">KO</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">04</td>
+                                <td class="players">
+                                    <span class="player">NETERO</span>
+                                    <span class="player">JOK</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">05</td>
+                                <td class="players">
+                                    <span class="player single-player">BISPO666</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">06</td>
+                                <td class="players">
+                                    <span class="player single-player">PABLOZETH</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">07</td>
+                                <td class="players">
+                                    <span class="player">EDWING</span>
+                                    <span class="player">BLUFLAMER</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">08</td>
+                                <td class="players">
+                                    <span class="player">GABYLANDIA</span>
+                                    <span class="player">ZEUS</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="line-number">09</td>
+                                <td class="players">
+                                    <span class="player">MOSCAS</span>
+                                    <span class="player">DOMLEVOIX</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>🎯 INFORMACIÓN</h3>
+            <p>Cada línea puede tener 1 o 2 jugadores asignados • Hover sobre los nombres para efecto visual • Diseño optimizado para gaming</p>
+        </div>
+    </div>
+</body>
+</html>
